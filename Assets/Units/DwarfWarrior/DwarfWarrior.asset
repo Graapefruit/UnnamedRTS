@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a1fe96ac70b634fa8379c5183684ff, type: 3}
+  m_Name: DwarfWarrior
+  m_EditorClassIdentifier: 
+  unitName: Dwarf Warrior
+  maxHp: 135
+  speed: 1.75
+  armour: 2
+  parry: 35
+  deflection: 50
+  icon: {fileID: 21300000, guid: 109cdafff28ad0f439681dfd805b824e, type: 3}
+  meleeWeapon: {fileID: 11400000, guid: 389b1100e7c22a745bbc2ff9597a0751, type: 2}
+  rangedWeapon: {fileID: 0}
