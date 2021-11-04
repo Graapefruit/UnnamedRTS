@@ -4,12 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectedUnitStatPanel : MonoBehaviour {
+    private const float TOKEN_INITIAL_OFFSET = 45.0f;
+    private const float TOKEN_INCREMENTAL_OFFSET = 65.0f;
     public UnitListReference unitsSelected;
     public Text noUnitSelectedText;
     public GameObject individualUnitSelection;
+    public GameObject multipleUnitSelection;
     public GameObject meleeWeaponSelection;
     public GameObject rangedWeaponSelection;
-    public GameObject multipleUnitSelection;
     public Text unitNameText;
     public Text unitHpText;
     public Text unitArmourText;
@@ -22,6 +24,13 @@ public class SelectedUnitStatPanel : MonoBehaviour {
     public Text rangeIntervalText;
     public Text rangeRangeText;
     public Image unitImage;
+    public GameObject unitSelectionTokenPrefab;
+    public RectTransform rectTransform;
+    private List<UnitSelectionToken> unitSelectionTokens;
+
+    void Awake() {
+        unitSelectionTokens = new List<UnitSelectionToken>();
+    }
 
     public void onNewUniSelection() {
         if (unitsSelected.value.Count < 1) {
@@ -70,5 +79,24 @@ public class SelectedUnitStatPanel : MonoBehaviour {
 
     private void toggleMultipleUnitSelection(bool enabled) {
         multipleUnitSelection.SetActive(enabled);
+        if (enabled) {
+            int currentRow = 0;
+            int currentColumn = 0;
+            foreach (Unit unit in unitsSelected.value) {
+                UnitSelectionToken newToken = Instantiate(unitSelectionTokenPrefab, multipleUnitSelection.transform).GetComponent<UnitSelectionToken>();
+                newToken.RepresentedUnit = unit;
+                newToken.transform.localPosition = new Vector3(TOKEN_INITIAL_OFFSET + (TOKEN_INCREMENTAL_OFFSET * currentColumn), -TOKEN_INITIAL_OFFSET - (TOKEN_INCREMENTAL_OFFSET * currentRow), 0.0f);
+                currentColumn++;
+                if (TOKEN_INITIAL_OFFSET + (currentColumn * TOKEN_INCREMENTAL_OFFSET) > rectTransform.rect.width) {
+                    Debug.Log(rectTransform.rect.width);
+                    currentColumn = 0;
+                    currentRow++;
+                }
+            }
+        } else {
+            foreach (UnitSelectionToken unitSelectionToken in unitSelectionTokens) {
+                Destroy(unitSelectionToken);
+            }
+        }
     }
 }
